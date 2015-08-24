@@ -11,9 +11,11 @@ vignette: >
 
 ```{r message = FALSE, warning=FALSE}
 library(dplyr)
+library(tidyr)
 library(ggplot2)
 library(falrec)
 library(scales)
+library(lubridate)
 d <- ler_dados()
 ```
 
@@ -163,6 +165,21 @@ d %>%
   theme(legend.position="bottom")
 ```
 
+### RollPeriod com dygraphs
+
+```{r fig.width=7, fig.height=4}
+ts <- d %>% 
+  filter(tipo == 'rec_req', data >= as.Date('2005-01-01'),
+         data <= as.Date(today())) %>%
+  spread(porte, valor) %>%
+  select(data, grande:total) %>%
+  {xts::xts(select(., -data), .$data)}
+
+dygraphs::dygraph(ts) %>%
+  dygraphs::dyRoller(rollPeriod = 12)
+```
+
+
 ## Recuperações deferidas
 
 ```{r fig.width=7, fig.height=5, warning=FALSE}
@@ -180,6 +197,20 @@ d %>%
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   theme(legend.position="bottom")
+```
+
+### RollPeriod com dygraphs
+
+```{r fig.width=7, fig.height=4}
+ts <- d %>% 
+  filter(tipo == 'rec_def', data >= as.Date('2005-01-01'),
+         data <= as.Date(today())) %>%
+  spread(porte, valor) %>%
+  select(data, grande:total) %>%
+  {xts::xts(select(., -data), .$data)}
+
+dygraphs::dygraph(ts) %>%
+  dygraphs::dyRoller(rollPeriod = 12)
 ```
 
 -----

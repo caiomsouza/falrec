@@ -9,23 +9,14 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-## Falências e recuperacões judiciais no Brasil!
-
-Os dados do Serasa Experian contêm informações mensais de número de falências requeridas, falências decretadas, recuperações requeridas e recuperações concedidas.
-
-O repositório contém um shiny app minimal com os dados baseados nas informações do Serasa. Os dados são atualizados a cada nova sessão (~500 kB), então pode demorar um pouco para rodar. Para rodar o app no seu computador, rode no RStudio:
-
-```
-shiny::runGitHub('jtrecenti/falrec', subdir='inst/shiny-examples/falrec')
-```
-
-## Análise inicial
 
 ```r
 library(dplyr)
+library(tidyr)
 library(ggplot2)
 library(falrec)
 library(scales)
+library(lubridate)
 d <- ler_dados()
 ```
 
@@ -196,6 +187,23 @@ d %>%
 
 ![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png) 
 
+### RollPeriod com dygraphs
+
+
+```r
+ts <- d %>% 
+  filter(tipo == 'rec_req', data >= as.Date('2005-01-01'),
+         data <= as.Date(today())) %>%
+  spread(porte, valor) %>%
+  select(data, grande:total) %>%
+  {xts::xts(select(., -data), .$data)}
+
+dygraphs::dygraph(ts) %>%
+  dygraphs::dyRoller(rollPeriod = 12)
+```
+
+![plot of chunk unnamed-chun](figure/dygraph-1.png) 
+
 ## Recuperações deferidas
 
 
@@ -216,11 +224,24 @@ d %>%
   theme(legend.position="bottom")
 ```
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png) 
+![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png) 
+
+### RollPeriod com dygraphs
+
+
+```r
+ts <- d %>% 
+  filter(tipo == 'rec_def', data >= as.Date('2005-01-01'),
+         data <= as.Date(today())) %>%
+  spread(porte, valor) %>%
+  select(data, grande:total) %>%
+  {xts::xts(select(., -data), .$data)}
+
+dygraphs::dygraph(ts) %>%
+  dygraphs::dyRoller(rollPeriod = 12)
+```
+
+![plot of chunk unnamed-chunk](figure/dygraph-2.png) 
 
 -----
-
-Licensa
-
-GNU GPLv2.
 
