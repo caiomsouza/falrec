@@ -14,7 +14,6 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(falrec)
-library(scales)
 library(lubridate)
 d <- ler_dados()
 ```
@@ -28,13 +27,13 @@ d <- ler_dados()
 ```{r fig.width=7, fig.height=4, warning=FALSE}
 d %>%
   filter(porte == 'total', tipo == 'fal_req') %>%
+  mutate(data = as.Date(data)) %>% 
   ggplot(aes(x = data, y = valor)) +
   geom_line(colour = 'red') +
-  scale_x_date(breaks = date_breaks('1 year'), 
-               minor_breaks = "3 months",
-               labels = date_format("%Y"),
-               limits = c(as.Date("1991-01-01"), 
-                          as.Date('2016-01-01'))) +
+#   scale_x_date(breaks = date_breaks('1 year'), 
+#                minor_breaks = "3 months",
+#                labels = date_format("%Y"),
+#                limits = c(as.Date("1991-01-01"), as.Date('2016-01-01'))) +
   scale_y_continuous(breaks = 0:100 * 500) +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -45,15 +44,16 @@ d %>%
 
 ```{r fig.width=7, fig.height=5, warning=FALSE}
 d %>%
+  mutate(data = as.Date(data)) %>% 
   filter(tipo == 'fal_req', 
          data >= as.Date('2005-01-01')) %>%
   ggplot(aes(x = data, y = valor, colour = porte)) +
   geom_line() +
-  scale_x_date(breaks = date_breaks('1 year'), 
-               minor_breaks = "3 months",
-               labels = date_format("%Y"),
-               limits = c(as.Date("2005-01-01"), 
-                          as.Date('2016-01-01'))) +
+#   scale_x_date(breaks = date_breaks('1 year'), 
+#                minor_breaks = "3 months",
+#                labels = date_format("%Y"),
+#                limits = c(as.Date("2005-01-01"), 
+#                           as.Date('2016-01-01'))) +
   scale_y_continuous(breaks = 0:100 * 100) +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -68,15 +68,16 @@ d %>%
 
 ```{r fig.width=7, fig.height=4, warning=FALSE}
 d %>%
+  mutate(data = as.Date(data)) %>% 
   filter(porte == 'total', tipo == 'fal_dec') %>%
   ggplot(aes(x = data, y = valor)) +
   geom_line(colour = 'red') +
   theme_bw() +
-  scale_x_date(breaks = date_breaks('1 year'), 
-               minor_breaks = "3 months",
-               labels = date_format("%Y"),
-               limits = c(as.Date("1991-01-01"), 
-                          as.Date('2016-01-01'))) +
+#   scale_x_date(breaks = date_breaks('1 year'), 
+#                minor_breaks = "3 months",
+#                labels = date_format("%Y"),
+#                limits = c(as.Date("1991-01-01"), 
+#                           as.Date('2016-01-01'))) +
   scale_y_continuous(breaks = 0:100 * 50) +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -87,15 +88,16 @@ d %>%
 
 ```{r fig.width=7, fig.height=5, warning=FALSE}
 d %>%
+  mutate(data = as.Date(data)) %>% 
   filter(tipo == 'fal_dec', 
          data >= as.Date('2005-01-01')) %>%
   ggplot(aes(x = data, y = valor, colour = porte)) +
   geom_line() +
-  scale_x_date(breaks = date_breaks('1 year'), 
-               minor_breaks = "3 months",
-               labels = date_format("%Y"),
-               limits = c(as.Date("2005-01-01"), 
-                          as.Date('2016-01-01'))) +
+#   scale_x_date(breaks = date_breaks('1 year'), 
+#                minor_breaks = "3 months",
+#                labels = date_format("%Y"),
+#                limits = c(as.Date("2005-01-01"), 
+#                           as.Date('2016-01-01'))) +
   scale_y_continuous(breaks = 0:100 * 50) +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -110,15 +112,16 @@ d %>%
 
 ```{r fig.width=7, fig.height=4, warning=FALSE}
 d %>%
+  mutate(data = as.Date(data)) %>% 
   filter(porte == 'total', tipo == 'fal_dec') %>%
   ggplot(aes(x = data, y = valor)) +
   geom_line(colour = 'red') +
   theme_bw() +
-  scale_x_date(breaks = date_breaks('1 year'), 
-               minor_breaks = "3 months",
-               labels = date_format("%Y"),
-               limits = c(as.Date("1991-01-01"), 
-                          as.Date('2016-01-01'))) +
+#   scale_x_date(breaks = date_breaks('1 year'), 
+#                minor_breaks = "3 months",
+#                labels = date_format("%Y"),
+#                limits = c(as.Date("1991-01-01"), 
+#                           as.Date('2016-01-01'))) +
   scale_y_continuous(breaks = 0:100 * 50) +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -129,15 +132,16 @@ d %>%
 
 ```{r fig.width=7, fig.height=5, warning=FALSE}
 d %>%
+  mutate(data = as.Date(data)) %>% 
   filter(tipo == 'fal_dec', 
          data >= as.Date('2005-01-01')) %>%
   ggplot(aes(x = data, y = valor, colour = porte)) +
   geom_line() +
-  scale_x_date(breaks = date_breaks('1 year'), 
-               minor_breaks = "3 months",
-               labels = date_format("%Y"),
-               limits = c(as.Date("2005-01-01"), 
-                          as.Date('2016-01-01'))) +
+#   scale_x_date(breaks = date_breaks('1 year'), 
+#                minor_breaks = "3 months",
+#                labels = date_format("%Y"),
+#                limits = c(as.Date("2005-01-01"), 
+#                           as.Date('2016-01-01'))) +
   scale_y_continuous(breaks = 0:100 * 50) +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -150,25 +154,29 @@ d %>%
 
 ```{r fig.width=7, fig.height=5, warning=FALSE}
 d %>%
+  mutate(data = as.Date(data)) %>% 
   filter(tipo == 'rec_req', 
          data >= as.Date('2005-01-01')) %>%
   ggplot(aes(x = data, y = valor, colour = porte)) +
   geom_line() +
-  scale_x_date(breaks = date_breaks('1 year'), 
-               minor_breaks = "3 months",
-               labels = date_format("%Y"),
-               limits = c(as.Date("2005-01-01"), 
-                          as.Date('2016-01-01'))) +
+#   scale_x_date(breaks = date_breaks('1 year'), 
+#                minor_breaks = "3 months",
+#                labels = date_format("%Y"),
+#                limits = c(as.Date("2005-01-01"), 
+#                           as.Date('2016-01-01'))) +
   scale_y_continuous(breaks = 0:100 * 10) +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   theme(legend.position="bottom")
+
+
 ```
 
 ### RollPeriod com dygraphs
 
 ```{r fig.width=7, fig.height=4}
 ts <- d %>% 
+  mutate(data = as.Date(data)) %>% 
   filter(tipo == 'rec_req', data >= as.Date('2005-01-01'),
          data <= as.Date(today())) %>%
   spread(porte, valor) %>%
@@ -179,20 +187,20 @@ dygraphs::dygraph(ts) %>%
   dygraphs::dyRoller(rollPeriod = 12)
 ```
 
-
 ## Recuperações deferidas
 
 ```{r fig.width=7, fig.height=5, warning=FALSE}
 d %>%
+  mutate(data = as.Date(data)) %>% 
   filter(tipo == 'rec_def', 
          data >= as.Date('2005-01-01')) %>%
   ggplot(aes(x = data, y = valor, colour = porte)) +
   geom_line() +
-  scale_x_date(breaks = date_breaks('1 year'), 
-               minor_breaks = "3 months",
-               labels = date_format("%Y"),
-               limits = c(as.Date("2005-01-01"), 
-                          as.Date('2016-01-01'))) +
+#   scale_x_date(breaks = date_breaks('1 year'), 
+#                minor_breaks = "3 months",
+#                labels = date_format("%Y"),
+#                limits = c(as.Date("2005-01-01"), 
+#                           as.Date('2016-01-01'))) +
   scale_y_continuous(breaks = 0:100 * 10) +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -203,6 +211,7 @@ d %>%
 
 ```{r fig.width=7, fig.height=4}
 ts <- d %>% 
+  mutate(data = as.Date(data)) %>% 
   filter(tipo == 'rec_def', data >= as.Date('2005-01-01'),
          data <= as.Date(today())) %>%
   spread(porte, valor) %>%
@@ -211,7 +220,63 @@ ts <- d %>%
 
 dygraphs::dygraph(ts) %>%
   dygraphs::dyRoller(rollPeriod = 12)
+
 ```
 
 -----
+
+
+## Cruzando com taxa selic
+
+```{r fig.width=7, fig.height=4}
+# selic <- read.table('~/Downloads/dados/selic.txt') %>% 
+#   select(data = V2, tx = V7, aa = V8) %>% 
+#   mutate(data = as.Date(lubridate::dmy(data))) %>% 
+#   mutate(tx = as.numeric(gsub(',', '.', tx)),
+#          aa = as.numeric(gsub(',', '.', aa)))
+# devtools::use_data(selic)
+
+data(selic)
+
+ts_selic <- selic %>% 
+  filter(data >= as.Date('2005-01-01'),
+         data <= as.Date(today())) %>%
+  select(data, tx:aa) %>%
+  {xts::xts(select(., -data), .$data)}
+
+ts <- d %>% 
+  mutate(data = as.Date(data)) %>% 
+  filter(tipo == 'rec_req', data >= as.Date('2005-01-01'),
+         data <= as.Date(today())) %>%
+  spread(porte, valor) %>%
+  select(data, total) %>%
+  {xts::xts(select(., -data), .$data)}
+
+ts_fim <- cbind(ts, ts_selic)
+```
+
+### Taxa de juros acumulada no período.
+
+```{r}
+dygraphs::dygraph(ts_fim) %>% 
+  dygraphs::dyAxis("y", label = "Recuperações requeridas") %>%
+  dygraphs::dyAxis("y2", label = "Taxa selic") %>%
+  dygraphs::dySeries("tx", axis = 'y2') %>% 
+  dygraphs::dySeries("total", axis = 'y') %>% 
+  dygraphs::dyOptions(connectSeparatedPoints = TRUE) %>% 
+  dygraphs::dyRoller(rollPeriod = 12)
+
+```
+
+### Taxa média diária de juros, anualizada com base em 252 dias úteis.
+
+```{r fig.width=7, fig.height=4}
+dygraphs::dygraph(ts_fim) %>% 
+  dygraphs::dyAxis("y", label = "Recuperações requeridas") %>%
+  dygraphs::dyAxis("y2", label = "Taxa selic (aa)") %>%
+  dygraphs::dySeries("aa", axis = 'y2') %>% 
+  dygraphs::dySeries("total", axis = 'y') %>% 
+  dygraphs::dyOptions(connectSeparatedPoints = TRUE) %>% 
+  dygraphs::dyRoller(rollPeriod = 12)
+```
 
