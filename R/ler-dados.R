@@ -31,7 +31,7 @@ ler_dados <- function() {
                     'conc_def', 'X21')
   dplyr::tbl_df(dados) %>% 
     dplyr::select(-21) %>%
-    dplyr::mutate(data = as.Date(data)) %>%
+    dplyr::mutate(data = as.character(as.Date(data))) %>%
     dplyr::select(-matches('conc')) %>%
     tidyr::gather(tipo, valor, -data) %>%
     dplyr::mutate(porte = gsub('[a-z]{3}_[a-z]{3}_', '', tipo), 
