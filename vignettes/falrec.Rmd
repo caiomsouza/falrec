@@ -241,7 +241,7 @@ data(selic)
 ts_selic <- selic %>% 
   filter(data >= as.Date('2005-01-01'),
          data <= as.Date(today())) %>%
-  select(data, tx:aa) %>%
+  select(data, tx) %>%
   {xts::xts(select(., -data), .$data)}
 
 ts <- d %>% 
@@ -257,7 +257,7 @@ ts_fim <- cbind(ts, ts_selic)
 
 ### Taxa de juros acumulada no período.
 
-```{r}
+```{r fig.width=7, fig.height=4}
 dygraphs::dygraph(ts_fim) %>% 
   dygraphs::dyAxis("y", label = "Recuperações requeridas") %>%
   dygraphs::dyAxis("y2", label = "Taxa selic") %>%
@@ -271,6 +271,24 @@ dygraphs::dygraph(ts_fim) %>%
 ### Taxa média diária de juros, anualizada com base em 252 dias úteis.
 
 ```{r fig.width=7, fig.height=4}
+data(selic)
+
+ts_selic <- selic %>% 
+  filter(data >= as.Date('2005-01-01'),
+         data <= as.Date(today())) %>%
+  select(data, aa) %>%
+  {xts::xts(select(., -data), .$data)}
+
+ts <- d %>% 
+  mutate(data = as.Date(data)) %>% 
+  filter(tipo == 'rec_req', data >= as.Date('2005-01-01'),
+         data <= as.Date(today())) %>%
+  spread(porte, valor) %>%
+  select(data, total) %>%
+  {xts::xts(select(., -data), .$data)}
+
+ts_fim <- cbind(ts, ts_selic)
+
 dygraphs::dygraph(ts_fim) %>% 
   dygraphs::dyAxis("y", label = "Recuperações requeridas") %>%
   dygraphs::dyAxis("y2", label = "Taxa selic (aa)") %>%
